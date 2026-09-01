@@ -38,12 +38,13 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
         children: screens,
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.surface,
-          boxShadow: [
+          border: Border(top: BorderSide(color: AppColors.border.withOpacity(0.5))),
+          boxShadow: const [
             BoxShadow(
               color: AppColors.shadowColor,
-              blurRadius: 16,
+              blurRadius: 18,
               offset: Offset(0, -4),
             )
           ],
@@ -54,17 +55,47 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(0, Icons.home_rounded, Icons.home_outlined, 'Home'),
-                _buildNavItem(1, Icons.storefront_rounded, Icons.storefront_outlined, 'Shop'),
-                _buildNavItem(2, Icons.local_offer_rounded, Icons.local_offer_outlined, 'Offers'),
-                _buildNavItem(
-                  3,
-                  Icons.shopping_bag_rounded,
-                  Icons.shopping_bag_outlined,
-                  'Cart',
-                  badgeCount: cartCount,
+                _NavItem(
+                  index: 0,
+                  currentIndex: _currentIndex,
+                  activeIcon: Icons.home_rounded,
+                  inactiveIcon: Icons.home_outlined,
+                  label: 'Home',
+                  onTap: () => setState(() => _currentIndex = 0),
                 ),
-                _buildNavItem(4, Icons.person_rounded, Icons.person_outline, 'Profile'),
+                _NavItem(
+                  index: 1,
+                  currentIndex: _currentIndex,
+                  activeIcon: Icons.storefront_rounded,
+                  inactiveIcon: Icons.storefront_outlined,
+                  label: 'Shop',
+                  onTap: () => setState(() => _currentIndex = 1),
+                ),
+                _NavItem(
+                  index: 2,
+                  currentIndex: _currentIndex,
+                  activeIcon: Icons.favorite_rounded,
+                  inactiveIcon: Icons.favorite_outline_rounded,
+                  label: 'Wishlist',
+                  onTap: () => setState(() => _currentIndex = 2),
+                ),
+                _NavItem(
+                  index: 3,
+                  currentIndex: _currentIndex,
+                  activeIcon: Icons.shopping_bag_rounded,
+                  inactiveIcon: Icons.shopping_bag_outlined,
+                  label: 'Cart',
+                  badgeCount: cartCount,
+                  onTap: () => setState(() => _currentIndex = 3),
+                ),
+                _NavItem(
+                  index: 4,
+                  currentIndex: _currentIndex,
+                  activeIcon: Icons.person_rounded,
+                  inactiveIcon: Icons.person_outline,
+                  label: 'Profile',
+                  onTap: () => setState(() => _currentIndex = 4),
+                ),
               ],
             ),
           ),
@@ -72,74 +103,128 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
       ),
     );
   }
+}
 
-  Widget _buildNavItem(
-    int index,
-    IconData activeIcon,
-    IconData inactiveIcon,
-    String label, {
-    int badgeCount = 0,
-  }) {
-    final isSelected = _currentIndex == index;
+class _NavItem extends StatefulWidget {
+  final int index;
+  final int currentIndex;
+  final IconData activeIcon;
+  final IconData inactiveIcon;
+  final String label;
+  final int badgeCount;
+  final VoidCallback onTap;
 
-    return GestureDetector(
-      onTap: () => setState(() => _currentIndex = index),
-      behavior: HitTestBehavior.opaque,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.accentGoldLight.withOpacity(0.6) : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Icon(
-                  isSelected ? activeIcon : inactiveIcon,
-                  color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                  size: 22,
-                ),
-                if (badgeCount > 0)
-                  Positioned(
-                    top: -4,
-                    right: -8,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 14,
-                        minHeight: 14,
-                      ),
-                      child: Text(
-                        '$badgeCount',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 9,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+  const _NavItem({
+    required this.index,
+    required this.currentIndex,
+    required this.activeIcon,
+    required this.inactiveIcon,
+    required this.label,
+    this.badgeCount = 0,
+    required this.onTap,
+  });
+
+  @override
+  State<_NavItem> createState() => _NavItemState();
+}
+
+class _NavItemState extends State<_NavItem> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isSelected = widget.currentIndex == widget.index;
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedScale(
+          scale: _isHovered ? 1.08 : 1.0,
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOutCubic,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? AppColors.accentGoldLight.withOpacity(0.7)
+                  : (_isHovered
+                      ? AppColors.accentGoldLight.withOpacity(0.3)
+                      : Colors.transparent),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: isSelected
+                    ? AppColors.accentGold
+                    : (_isHovered ? AppColors.borderGold : Colors.transparent),
+                width: 1,
               ),
             ),
-          ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Icon(
+                      isSelected ? widget.activeIcon : widget.inactiveIcon,
+                      color: isSelected
+                          ? AppColors.primary
+                          : (_isHovered ? AppColors.primaryLight : AppColors.textSecondary),
+                      size: 22,
+                    ),
+                    if (widget.badgeCount > 0)
+                      Positioned(
+                        top: -5,
+                        right: -9,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withOpacity(0.3),
+                                blurRadius: 4,
+                              )
+                            ],
+                          ),
+                          constraints: const BoxConstraints(
+                            minWidth: 15,
+                            minHeight: 15,
+                          ),
+                          child: Text(
+                            '${widget.badgeCount}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  widget.label,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: isSelected || _isHovered
+                        ? FontWeight.bold
+                        : FontWeight.w500,
+                    color: isSelected
+                        ? AppColors.primary
+                        : (_isHovered ? AppColors.primaryLight : AppColors.textSecondary),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
