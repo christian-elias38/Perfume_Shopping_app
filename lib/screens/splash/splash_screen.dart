@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../onboarding/onboarding_screen.dart';
@@ -10,10 +11,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
+    _timer = Timer(const Duration(seconds: 2), () {
       if (mounted) {
         Navigator.pushReplacement(
           context,
@@ -21,6 +24,12 @@ class _SplashScreenState extends State<SplashScreen> {
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
