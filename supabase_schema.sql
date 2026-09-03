@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS public.products (
     discount_price NUMERIC(10, 2),
     size_ml INT NOT NULL DEFAULT 100,
     category_id UUID REFERENCES public.categories(id) ON DELETE SET NULL,
-    fragrance_family TEXT NOT NULL, -- Fresh, Floral, Gourmand, Spicy, Woody, Rose
+    fragrance_family TEXT NOT NULL, -- Fresh, Floral, Gourmand, Spicy, Woody, Rose, Amber & Oud, Leather & Musk
     longevity TEXT NOT NULL DEFAULT 'Long Lasting (8-12 hrs)', -- Moderate, Long Lasting, Eternal
     top_notes TEXT[] DEFAULT '{}',
     middle_notes TEXT[] DEFAULT '{}',
@@ -214,7 +214,10 @@ INSERT INTO public.categories (id, name, description, image_url) VALUES
 ('c3333333-3333-3333-3333-333333333333', 'Gourmand', 'Rich Madagascar vanilla, roasted coffee, and tonka bean', 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=600&q=80'),
 ('c4444444-4444-4444-4444-444444444444', 'Spicy', 'Warm saffron, cardamom, pink pepper, and cinnamon', 'https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=600&q=80'),
 ('c5555555-5555-5555-5555-555555555555', 'Woody', 'Royal Oud, Mysore sandalwood, cedarwood, and vetiver', 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80'),
-('c6666666-6666-6666-6666-666666666666', 'Rose', 'Opulent Damask rose, Turkish rose absolute, and amber', 'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=600&q=80')
+('c6666666-6666-6666-6666-666666666666', 'Rose', 'Opulent Damask rose, Turkish rose absolute, and amber', 'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=600&q=80'),
+('c7777777-7777-7777-7777-777777777777', 'Amber & Oud', 'Precious resins, golden amber, and ancient agarwood', 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=600&q=80'),
+('c8888888-8888-8888-8888-888888888888', 'Leather & Musk', 'Sensual velvet suede, white musk, and dark birch tar', 'https://images.unsplash.com/photo-1615397349754-cfa2066a298e?auto=format&fit=crop&w=600&q=80'),
+('c9999999-9999-9999-9999-999999999999', 'Decants & Travel', 'Hand-poured 15ML to 30ML luxury travel atomizers', 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80')
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO public.products (id, name, brand, description, price, discount_price, size_ml, category_id, fragrance_family, longevity, top_notes, middle_notes, base_notes, image_urls, stock, rating, reviews_count, is_featured, is_best_seller) VALUES
@@ -234,7 +237,7 @@ INSERT INTO public.products (id, name, brand, description, price, discount_price
     ARRAY['Madagascar Vanilla', 'White Musk', 'Creamy Sandalwood'],
     ARRAY['https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80', 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80'],
     35,
-    4.9,
+    5.0,
     128,
     true,
     true
@@ -320,6 +323,69 @@ INSERT INTO public.products (id, name, brand, description, price, discount_price
     15,
     4.9,
     74,
+    true,
+    true
+),
+(
+    'p7777777-7777-7777-7777-777777777777',
+    'Grand Oud Amber Extrait',
+    'Yusuf Bhai Parfums',
+    'An opulent elixir steeped in golden amber resin, aged Indian agarwood, labdanum, and warm spicy cardamom. Created for true niche fragrance collectors.',
+    350.00,
+    310.00,
+    100,
+    'c7777777-7777-7777-7777-777777777777',
+    'Woody',
+    'Eternal (16+ hrs)',
+    ARRAY['Black Pepper', 'Golden Saffron', 'Wild Bergamot'],
+    ARRAY['Aged Oud', 'Ambergris', 'Rosewood'],
+    ARRAY['Labdanum Resin', 'Benzoin', 'Virginia Cedar'],
+    ARRAY['https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80'],
+    18,
+    5.0,
+    142,
+    true,
+    true
+),
+(
+    'p8888888-8888-8888-8888-888888888888',
+    'Baccarat Amber Glow',
+    'Maison Athena',
+    'A radiant floral-amber fragrance that rests on the skin like spun gold. Luminous jasmine blossoms intertwine with warm saffron and mineral ambergris.',
+    325.00,
+    285.00,
+    100,
+    'c7777777-7777-7777-7777-777777777777',
+    'Spicy',
+    'Long Lasting (12+ hrs)',
+    ARRAY['Grandiflorum Jasmine', 'Saffron'],
+    ARRAY['Amberwood', 'Ambergris Accord'],
+    ARRAY['Fir Resin', 'Atlas Cedar'],
+    ARRAY['https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80'],
+    22,
+    4.9,
+    195,
+    true,
+    true
+),
+(
+    'p1201201-2012-2012-2012-201201201201',
+    'Midnight Decant Atomizer (15ML)',
+    'Parfumerie Decants',
+    'Hand-poured 15ML luxury decant bottle filled with rich espresso, cocoa powder, roasted hazelnut, and dark vanilla bourbon.',
+    52.00,
+    42.00,
+    15,
+    'c9999999-9999-9999-9999-999999999999',
+    'Gourmand',
+    'Long Lasting (8-10 hrs)',
+    ARRAY['Cocoa Powder', 'Italian Espresso'],
+    ARRAY['Roasted Hazelnut', 'Salted Caramel'],
+    ARRAY['Madagascar Vanilla', 'Dark Musk'],
+    ARRAY['https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80'],
+    60,
+    4.9,
+    156,
     true,
     true
 )
