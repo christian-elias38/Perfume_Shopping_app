@@ -9,6 +9,10 @@ import '../../widgets/category_pill.dart';
 import '../../widgets/luxury_background.dart';
 import '../../widgets/luxury_banner.dart';
 import '../../widgets/product_card.dart';
+import '../../widgets/scent_quiz_modal.dart';
+import '../../widgets/shadcn/shadcn_badge.dart';
+import '../../widgets/shadcn/shadcn_button.dart';
+import '../../widgets/shadcn/shadcn_card.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -155,12 +159,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Backend Offline Status Banner (Shown if Supabase is offline/demo)
+                // Backend Status Banner
                 const BackendStatusBanner(showOnlyIfOffline: true),
 
-                // Interactive Search Trigger Bar with Hover state
+                // Command-Style Search Trigger Bar
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     onEnter: (_) => setState(() => _searchBarHovered = true),
@@ -174,7 +178,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         decoration: BoxDecoration(
                           color: _searchBarHovered
                               ? Colors.white
@@ -208,12 +212,77 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 fontSize: 14,
                               ),
                             ),
+                            const Spacer(),
+                            ShadcnBadge(
+                              label: '⌘K Search',
+                              variant: ShadcnBadgeVariant.outline,
+                              fontSize: 10,
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 10),
+
+                // Interactive Scent Finder Quiz Card Trigger
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: ShadcnCard(
+                    variant: ShadcnCardVariant.glass,
+                    onTap: () {
+                      ScentQuizModal.show(context);
+                    },
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [AppColors.primary, AppColors.primaryLight],
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.auto_awesome_rounded, color: AppColors.accentGold, size: 24),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                '✨ Scent Finder Quiz',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                              SizedBox(height: 2),
+                              Text(
+                                'Match your mood & occasion in 2 simple steps',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const ShadcnButton(
+                          text: 'Quiz',
+                          variant: ShadcnButtonVariant.gold,
+                          size: ShadcnButtonSize.sm,
+                          onPressed: null, // Card handles tap
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 14),
 
                 // Hero Luxury Banner
                 LuxuryBanner(
@@ -358,7 +427,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.62,
+                        childAspectRatio: 0.60,
                         crossAxisSpacing: 14,
                         mainAxisSpacing: 14,
                       ),
@@ -366,7 +435,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       itemBuilder: (context, index) {
                         return TweenAnimationBuilder<double>(
                           tween: Tween(begin: 0.0, end: 1.0),
-                          duration: Duration(milliseconds: 300 + (index * 80)),
+                          duration: Duration(milliseconds: 250 + (index * 60)),
                           curve: Curves.easeOutQuad,
                           builder: (context, value, child) {
                             return Opacity(
