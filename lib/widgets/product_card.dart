@@ -5,7 +5,10 @@ import '../models/product_model.dart';
 import '../providers/cart_provider.dart';
 import '../providers/wishlist_provider.dart';
 import '../screens/product/product_detail_screen.dart';
+import 'product_quick_view_sheet.dart';
 import 'rating_stars.dart';
+import 'shadcn/shadcn_badge.dart';
+import 'shadcn/shadcn_toast.dart';
 
 class ProductCard extends ConsumerStatefulWidget {
   final ProductModel product;
@@ -31,9 +34,9 @@ class _ProductCardState extends ConsumerState<ProductCard>
     super.initState();
     _heartController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 240),
       lowerBound: 1.0,
-      upperBound: 1.35,
+      upperBound: 1.4,
     );
   }
 
@@ -61,12 +64,8 @@ class _ProductCardState extends ConsumerState<ProductCard>
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => ProductDetailScreen(productId: widget.product.id),
-            ),
-          );
+          // Open Quick View Sheet on tap with spring entrance animation!
+          ProductQuickViewSheet.show(context, widget.product);
         },
         child: AnimatedScale(
           scale: _isHovered ? 1.03 : 1.0,
@@ -77,17 +76,17 @@ class _ProductCardState extends ConsumerState<ProductCard>
             width: widget.width,
             decoration: BoxDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(
-                color: _isHovered ? AppColors.accentGold : AppColors.border,
-                width: _isHovered ? 1.5 : 1.0,
+                color: _isHovered ? AppColors.accentGold : AppColors.borderGold.withOpacity(0.4),
+                width: _isHovered ? 1.6 : 1.0,
               ),
               boxShadow: [
                 BoxShadow(
                   color: _isHovered
-                      ? AppColors.accentGold.withOpacity(0.25)
+                      ? AppColors.accentGold.withOpacity(0.28)
                       : AppColors.shadowColor,
-                  blurRadius: _isHovered ? 18 : 10,
+                  blurRadius: _isHovered ? 20 : 10,
                   spreadRadius: _isHovered ? 1 : 0,
                   offset: _isHovered ? const Offset(0, 8) : const Offset(0, 4),
                 )
@@ -96,17 +95,16 @@ class _ProductCardState extends ConsumerState<ProductCard>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Product Image & Floating Wishlist Heart
+                // Product Image & Floating Quick View / Wishlist Action Badges
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(19)),
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(21)),
                       child: AspectRatio(
                         aspectRatio: 1.0,
                         child: AnimatedScale(
-                          scale: _isHovered ? 1.08 : 1.0,
-                          duration: const Duration(milliseconds: 300),
+                          scale: _isHovered ? 1.09 : 1.0,
+                          duration: const Duration(milliseconds: 320),
                           child: Hero(
                             tag: 'product-image-${widget.product.id}',
                             child: Image.network(
@@ -123,39 +121,45 @@ class _ProductCardState extends ConsumerState<ProductCard>
                       ),
                     ),
 
-                    // Discount Badge
+                    // Discount Badge (Shadcn style)
                     if (widget.product.hasDiscount)
                       Positioned(
                         top: 10,
                         left: 10,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 9, vertical: 4),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [AppColors.primary, AppColors.primaryLight],
-                            ),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 4,
-                              )
-                            ],
-                          ),
-                          child: Text(
-                            '${widget.product.discountPercentage}% OFF',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
+                        child: ShadcnBadge(
+                          label: '${widget.product.discountPercentage}% OFF',
+                          variant: ShadcnBadgeVariant.defaultBadge,
                         ),
                       ),
 
-                    // Wishlist Button with Heart Animation & Hover Feedback
+                    // Quick View eye button overlay on hover
+                    Positioned(
+                      bottom: 10,
+                      left: 10,
+                      child: AnimatedOpacity(
+                        opacity: _isHovered ? 1.0 : 0.85,
+                        duration: const Duration(milliseconds: 180),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.65),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.remove_red_eye_rounded, size: 12, color: AppColors.accentGold),
+                              SizedBox(width: 4),
+                              Text(
+                                'Quick View',
+                                style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Floating Heart Wishlist Trigger
                     Positioned(
                       top: 10,
                       right: 10,
@@ -165,6 +169,12 @@ class _ProductCardState extends ConsumerState<ProductCard>
                           onTap: () {
                             _triggerHeartAnimation();
                             wishlistNotifier.toggleWishlist(widget.product);
+                            ShadcnToast.show(
+                              context: context,
+                              title: isWishlisted ? 'Removed from Wishlist' : 'Saved to Wishlist!',
+                              icon: isWishlisted ? Icons.favorite_border : Icons.favorite,
+                              iconColor: AppColors.primary,
+                            );
                           },
                           child: ScaleTransition(
                             scale: _heartController,
@@ -172,7 +182,7 @@ class _ProductCardState extends ConsumerState<ProductCard>
                               duration: const Duration(milliseconds: 150),
                               padding: const EdgeInsets.all(7),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.95),
+                                color: Colors.white.withOpacity(0.92),
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
@@ -185,13 +195,9 @@ class _ProductCardState extends ConsumerState<ProductCard>
                                 ],
                               ),
                               child: Icon(
-                                isWishlisted
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
+                                isWishlisted ? Icons.favorite : Icons.favorite_border,
                                 size: 18,
-                                color: isWishlisted
-                                    ? AppColors.primary
-                                    : AppColors.textSecondary,
+                                color: isWishlisted ? AppColors.primary : AppColors.textSecondary,
                               ),
                             ),
                           ),
@@ -201,24 +207,37 @@ class _ProductCardState extends ConsumerState<ProductCard>
                   ],
                 ),
 
-                // Product Information
+                // Information Section
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.product.brand.toUpperCase(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.accentGold,
-                          letterSpacing: 0.8,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.product.brand.toUpperCase(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.accentGold,
+                                letterSpacing: 0.8,
+                              ),
+                            ),
+                          ),
+                          ShadcnBadge(
+                            label: widget.product.fragranceFamily,
+                            variant: ShadcnBadgeVariant.gold,
+                            fontSize: 9,
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 3),
+                      const SizedBox(height: 4),
                       Text(
                         widget.product.name,
                         maxLines: 1,
@@ -231,11 +250,12 @@ class _ProductCardState extends ConsumerState<ProductCard>
                       ),
                       const SizedBox(height: 4),
                       RatingStars(
-                          rating: widget.product.rating,
-                          reviewsCount: widget.product.reviewsCount),
+                        rating: widget.product.rating,
+                        reviewsCount: widget.product.reviewsCount,
+                      ),
                       const SizedBox(height: 10),
 
-                      // Price & Quick Add Button
+                      // Price & Add to Cart Trigger
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -262,46 +282,24 @@ class _ProductCardState extends ConsumerState<ProductCard>
                             ],
                           ),
 
-                          // Quick Add Button
+                          // Add to Cart Button
                           MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: GestureDetector(
                               onTap: () {
-                                ref
-                                    .read(cartProvider.notifier)
-                                    .addToCart(widget.product);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Row(
-                                      children: [
-                                        const Icon(Icons.check_circle_outline,
-                                            color: AppColors.accentGold, size: 18),
-                                        const SizedBox(width: 8),
-                                        Expanded(
-                                          child: Text(
-                                            '${widget.product.name} added to cart!',
-                                            style: const TextStyle(
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    backgroundColor: AppColors.primaryDark,
-                                    duration: const Duration(seconds: 2),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
+                                ref.read(cartProvider.notifier).addToCart(widget.product);
+                                ShadcnToast.show(
+                                  context: context,
+                                  title: 'Added to Shopping Bag!',
+                                  message: widget.product.name,
+                                  icon: Icons.shopping_bag_rounded,
                                 );
                               },
                               child: AnimatedContainer(
                                 duration: const Duration(milliseconds: 180),
                                 padding: const EdgeInsets.all(9),
                                 decoration: BoxDecoration(
-                                  color: _isHovered
-                                      ? AppColors.primaryDark
-                                      : AppColors.primary,
+                                  color: _isHovered ? AppColors.primaryDark : AppColors.primary,
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
