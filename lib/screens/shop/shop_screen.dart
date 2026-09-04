@@ -6,6 +6,7 @@ import '../../providers/product_provider.dart';
 import '../../widgets/filter_bottom_sheet.dart';
 import '../../widgets/luxury_background.dart';
 import '../../widgets/product_card.dart';
+import '../../widgets/shadcn/shadcn_badge.dart';
 
 class ShopScreen extends ConsumerWidget {
   const ShopScreen({super.key});
@@ -22,7 +23,7 @@ class ShopScreen extends ConsumerWidget {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Shop Fragrances'),
+        title: const Text('Haute Shop Collection'),
         actions: [
           MouseRegion(
             cursor: SystemMouseCursors.click,
@@ -118,15 +119,13 @@ class ShopScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 child: Row(
                   children: [
-                    const Text('Family: ', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-                    Chip(
-                      label: Text(selectedFamily),
-                      deleteIcon: const Icon(Icons.close, size: 14),
-                      onDeleted: () {
+                    const Text('Fragrance Family: ', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                    ShadcnBadge(
+                      label: selectedFamily,
+                      variant: ShadcnBadgeVariant.gold,
+                      onTap: () {
                         ref.read(selectedFragranceFamilyProvider.notifier).state = 'All';
                       },
-                      backgroundColor: AppColors.accentGold.withOpacity(0.2),
-                      labelStyle: const TextStyle(fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -176,7 +175,7 @@ class ShopScreen extends ConsumerWidget {
                     padding: const EdgeInsets.all(16),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.62,
+                      childAspectRatio: 0.60,
                       crossAxisSpacing: 14,
                       mainAxisSpacing: 14,
                     ),
@@ -184,7 +183,7 @@ class ShopScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       return TweenAnimationBuilder<double>(
                         tween: Tween(begin: 0.0, end: 1.0),
-                        duration: Duration(milliseconds: 250 + (index * 60)),
+                        duration: Duration(milliseconds: 250 + (index * 50)),
                         curve: Curves.easeOutQuad,
                         builder: (context, value, child) {
                           return Opacity(
