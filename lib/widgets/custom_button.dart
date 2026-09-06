@@ -57,7 +57,7 @@ class _CustomButtonState extends State<CustomButton> {
               if (_isHovered && !widget.isOutlined)
                 BoxShadow(
                   color: (widget.backgroundColor ?? AppColors.primary)
-                      .withOpacity(0.35),
+                      .withValues(alpha: 0.35),
                   blurRadius: 14,
                   offset: const Offset(0, 6),
                 )
