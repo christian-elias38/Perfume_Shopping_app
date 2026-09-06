@@ -27,7 +27,8 @@ class SupabaseService {
 
   static Future<void> initialize() async {
     if (!SupabaseConfig.isConfigured) {
-      _statusMessage = 'Supabase unconfigured. Operating in Rich Offline Demo Mode.';
+      _statusMessage =
+          'Supabase unconfigured. Operating in Rich Offline Demo Mode.';
       debugPrint('[Supabase] $_statusMessage');
       _initialized = false;
       _isReachable = false;
@@ -37,7 +38,7 @@ class SupabaseService {
     try {
       await Supabase.initialize(
         url: SupabaseConfig.supabaseUrl,
-        anonKey: SupabaseConfig.supabaseAnonKey,
+        publishableKey: SupabaseConfig.supabaseAnonKey,
       );
       _initialized = true;
 
@@ -49,7 +50,8 @@ class SupabaseService {
         debugPrint('[Supabase] $_statusMessage');
       } else {
         _isReachable = false;
-        _statusMessage = 'Supabase host unreachable. Operating in Rich Offline Demo Mode.';
+        _statusMessage =
+            'Supabase host unreachable. Operating in Rich Offline Demo Mode.';
         debugPrint('[Supabase] $_statusMessage');
       }
     } catch (e) {
@@ -67,10 +69,9 @@ class SupabaseService {
       if (host.isEmpty) return false;
 
       // DNS / Socket reachability test with 2.5s timeout
-      final result = await InternetAddress.lookup(host).timeout(
-        const Duration(milliseconds: 2500),
-        onTimeout: () => [],
-      );
+      final result = await InternetAddress.lookup(
+        host,
+      ).timeout(const Duration(milliseconds: 2500), onTimeout: () => []);
 
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } catch (_) {
@@ -78,4 +79,3 @@ class SupabaseService {
     }
   }
 }
-
