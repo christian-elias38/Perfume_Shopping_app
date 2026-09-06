@@ -63,7 +63,7 @@ class _LuxuryBannerState extends State<LuxuryBanner> {
               boxShadow: [
                 BoxShadow(
                   color: _isHovered
-                      ? AppColors.primary.withOpacity(0.4)
+                      ? AppColors.primary.withValues(alpha: 0.4)
                       : AppColors.shadowColor,
                   blurRadius: _isHovered ? 20 : 12,
                   spreadRadius: _isHovered ? 1 : 0,
@@ -97,7 +97,7 @@ class _LuxuryBannerState extends State<LuxuryBanner> {
                         child: Image.network(
                           widget.imageUrl,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const SizedBox(),
+                          errorBuilder: (_, _, _) => const SizedBox(),
                         ),
                       ),
                     ),
@@ -115,7 +115,7 @@ class _LuxuryBannerState extends State<LuxuryBanner> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppColors.accentGold.withOpacity(0.25),
+                          color: AppColors.accentGold.withValues(alpha: 0.25),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                               color: AppColors.accentGold, width: 0.8),
@@ -155,7 +155,7 @@ class _LuxuryBannerState extends State<LuxuryBanner> {
                           boxShadow: [
                             if (_isHovered)
                               BoxShadow(
-                                color: Colors.white.withOpacity(0.4),
+                                color: Colors.white.withValues(alpha: 0.4),
                                 blurRadius: 10,
                               )
                           ],
