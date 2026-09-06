@@ -69,7 +69,7 @@ class _ProductQuickViewSheetState extends ConsumerState<ProductQuickViewSheet> {
                   child: Image.network(
                     widget.product.mainImage,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (_, _, _) => Container(
                       color: AppColors.surfaceVariant,
                       child: const Icon(Icons.local_florist, size: 60, color: AppColors.primary),
                     ),
@@ -115,7 +115,7 @@ class _ProductQuickViewSheetState extends ConsumerState<ProductQuickViewSheet> {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       shape: BoxShape.circle,
                       boxShadow: const [
                         BoxShadow(color: Colors.black12, blurRadius: 6)
