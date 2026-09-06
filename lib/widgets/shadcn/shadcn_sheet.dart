@@ -48,9 +48,9 @@ class ShadcnSheet extends StatelessWidget {
         maxHeight: MediaQuery.of(context).size.height * maxHeightFactor,
       ),
       decoration: BoxDecoration(
-        color: AppColors.background.withOpacity(0.92),
+        color: AppColors.background.withValues(alpha: 0.92),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-        border: Border.all(color: AppColors.borderGold.withOpacity(0.6), width: 1.5),
+        border: Border.all(color: AppColors.borderGold.withValues(alpha: 0.6), width: 1.5),
         boxShadow: const [
           BoxShadow(
             color: Colors.black26,
@@ -74,7 +74,7 @@ class ShadcnSheet extends StatelessWidget {
                   width: 42,
                   height: 5,
                   decoration: BoxDecoration(
-                    color: AppColors.accentGold.withOpacity(0.7),
+                    color: AppColors.accentGold.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
@@ -134,7 +134,7 @@ class ShadcnSheet extends StatelessWidget {
                 ),
 
               if (title != null || description != null)
-                Divider(color: AppColors.borderGold.withOpacity(0.3), height: 16),
+                Divider(color: AppColors.borderGold.withValues(alpha: 0.3), height: 16),
 
               // Body Content
               Flexible(
@@ -146,7 +146,7 @@ class ShadcnSheet extends StatelessWidget {
 
               // Optional Footer
               if (footer != null) ...[
-                Divider(color: AppColors.borderGold.withOpacity(0.3), height: 16),
+                Divider(color: AppColors.borderGold.withValues(alpha: 0.3), height: 16),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
                   child: footer!,
