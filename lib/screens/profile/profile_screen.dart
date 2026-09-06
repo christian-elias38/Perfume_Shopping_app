@@ -56,7 +56,7 @@ class ProfileScreen extends ConsumerWidget {
                 decoration: BoxDecoration(
                   color: AppColors.surface,
                   borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: AppColors.borderGold.withOpacity(0.5)),
+                  border: Border.all(color: AppColors.borderGold.withValues(alpha: 0.5)),
                   boxShadow: const [
                     BoxShadow(
                       color: AppColors.shadowColor,
@@ -236,7 +236,7 @@ class _HoverStatCardState extends State<_HoverStatCard> {
             boxShadow: [
               BoxShadow(
                 color: _isHovered
-                    ? AppColors.accentGold.withOpacity(0.2)
+                    ? AppColors.accentGold.withValues(alpha: 0.2)
                     : AppColors.shadowColor,
                 blurRadius: _isHovered ? 12 : 6,
                 offset: const Offset(0, 4),
@@ -313,7 +313,7 @@ class _HoverProfileTileState extends State<_HoverProfileTile> {
               boxShadow: [
                 BoxShadow(
                   color: _isHovered
-                      ? AppColors.accentGold.withOpacity(0.18)
+                      ? AppColors.accentGold.withValues(alpha: 0.18)
                       : AppColors.shadowColor,
                   blurRadius: _isHovered ? 10 : 4,
                   offset: const Offset(0, 3),
@@ -325,7 +325,7 @@ class _HoverProfileTileState extends State<_HoverProfileTile> {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: _isHovered
-                      ? AppColors.accentGoldLight.withOpacity(0.5)
+                      ? AppColors.accentGoldLight.withValues(alpha: 0.5)
                       : AppColors.surfaceVariant,
                   borderRadius: BorderRadius.circular(10),
                 ),
