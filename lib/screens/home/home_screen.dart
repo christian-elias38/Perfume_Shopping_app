@@ -50,7 +50,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
+                    color: AppColors.primary.withValues(alpha: 0.3),
                     blurRadius: 6,
                   )
                 ],
@@ -120,7 +120,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primary.withOpacity(0.4),
+                              color: AppColors.primary.withValues(alpha: 0.4),
                               blurRadius: 4,
                             )
                           ],
@@ -182,7 +182,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         decoration: BoxDecoration(
                           color: _searchBarHovered
                               ? Colors.white
-                              : AppColors.inputBackground.withOpacity(0.9),
+                              : AppColors.inputBackground.withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(
                             color: _searchBarHovered ? AppColors.accentGold : AppColors.border,
@@ -191,7 +191,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           boxShadow: [
                             if (_searchBarHovered)
                               BoxShadow(
-                                color: AppColors.accentGold.withOpacity(0.2),
+                                color: AppColors.accentGold.withValues(alpha: 0.2),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               )
@@ -338,13 +338,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     loading: () => const Center(
                       child: CircularProgressIndicator(color: AppColors.primary),
                     ),
-                    error: (_, __) => const SizedBox(),
+                    error: (_, _) => const SizedBox(),
                     data: (categories) {
                       return ListView.separated(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         scrollDirection: Axis.horizontal,
                         itemCount: categories.length + 1,
-                        separatorBuilder: (_, __) => const SizedBox(width: 16),
+                        separatorBuilder: (_, _) => const SizedBox(width: 16),
                         itemBuilder: (context, index) {
                           if (index == 0) {
                             final isSel = selectedCategory == 'All';
@@ -381,9 +381,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
-                      color: AppColors.accentGold.withOpacity(0.18),
+                      color: AppColors.accentGold.withValues(alpha: 0.18),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.accentGold.withOpacity(0.5)),
+                      border: Border.all(color: AppColors.accentGold.withValues(alpha: 0.5)),
                     ),
                     child: const Text(
                       '★  BEST SELLERS',
@@ -510,8 +510,8 @@ class _AllCategoryCircleState extends State<_AllCategoryCircle> {
                     if (widget.isSelected || _isHovered)
                       BoxShadow(
                         color: widget.isSelected
-                            ? AppColors.primary.withOpacity(0.35)
-                            : AppColors.accentGold.withOpacity(0.25),
+                            ? AppColors.primary.withValues(alpha: 0.35)
+                            : AppColors.accentGold.withValues(alpha: 0.25),
                         blurRadius: _isHovered ? 12 : 8,
                         offset: const Offset(0, 4),
                       )
