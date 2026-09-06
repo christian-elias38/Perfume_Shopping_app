@@ -16,7 +16,6 @@ class AppTheme {
         secondary: AppColors.accentGold,
         surface: AppColors.surface,
         onSurface: AppColors.textPrimary,
-        background: AppColors.background,
         error: AppColors.error,
       ),
       textTheme: baseText.copyWith(
