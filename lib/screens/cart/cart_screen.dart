@@ -77,7 +77,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     child: ListView.separated(
                       padding: const EdgeInsets.all(16),
                       itemCount: cartState.items.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 14),
+                      separatorBuilder: (_, _) => const SizedBox(height: 14),
                       itemBuilder: (context, index) {
                         final item = cartState.items[index];
                         final product = item.product;
@@ -98,7 +98,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     decoration: BoxDecoration(
                       color: AppColors.surface,
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                      border: Border.all(color: AppColors.borderGold.withOpacity(0.4)),
+                      border: Border.all(color: AppColors.borderGold.withValues(alpha: 0.4)),
                       boxShadow: const [
                         BoxShadow(
                           color: AppColors.shadowColor,
@@ -273,7 +273,7 @@ class _CartItemTileState extends State<_CartItemTile> {
             boxShadow: [
               BoxShadow(
                 color: _isHovered
-                    ? AppColors.accentGold.withOpacity(0.2)
+                    ? AppColors.accentGold.withValues(alpha: 0.2)
                     : AppColors.shadowColor,
                 blurRadius: _isHovered ? 12 : 8,
                 offset: const Offset(0, 3),
@@ -291,7 +291,7 @@ class _CartItemTileState extends State<_CartItemTile> {
                   child: Image.network(
                     widget.product?.mainImage ?? '',
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (_, _, _) => Container(
                       color: AppColors.surfaceVariant,
                       child: const Icon(Icons.local_florist, color: AppColors.primary),
                     ),
