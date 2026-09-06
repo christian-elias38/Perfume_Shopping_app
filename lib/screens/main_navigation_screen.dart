@@ -40,7 +40,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
-          border: Border(top: BorderSide(color: AppColors.border.withOpacity(0.5))),
+          border: Border(top: BorderSide(color: AppColors.border.withValues(alpha: 0.5))),
           boxShadow: const [
             BoxShadow(
               color: AppColors.shadowColor,
@@ -151,9 +151,9 @@ class _NavItemState extends State<_NavItem> {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             decoration: BoxDecoration(
               color: isSelected
-                  ? AppColors.accentGoldLight.withOpacity(0.7)
+                  ? AppColors.accentGoldLight.withValues(alpha: 0.7)
                   : (_isHovered
-                      ? AppColors.accentGoldLight.withOpacity(0.3)
+                      ? AppColors.accentGoldLight.withValues(alpha: 0.3)
                       : Colors.transparent),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
@@ -187,7 +187,7 @@ class _NavItemState extends State<_NavItem> {
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withOpacity(0.3),
+                                color: AppColors.primary.withValues(alpha: 0.3),
                                 blurRadius: 4,
                               )
                             ],
