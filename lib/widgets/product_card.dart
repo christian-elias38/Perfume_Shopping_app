@@ -4,7 +4,6 @@ import '../core/constants/app_colors.dart';
 import '../models/product_model.dart';
 import '../providers/cart_provider.dart';
 import '../providers/wishlist_provider.dart';
-import '../screens/product/product_detail_screen.dart';
 import 'product_quick_view_sheet.dart';
 import 'rating_stars.dart';
 import 'shadcn/shadcn_badge.dart';
@@ -14,11 +13,7 @@ class ProductCard extends ConsumerStatefulWidget {
   final ProductModel product;
   final double width;
 
-  const ProductCard({
-    super.key,
-    required this.product,
-    this.width = 170,
-  });
+  const ProductCard({super.key, required this.product, this.width = 170});
 
   @override
   ConsumerState<ProductCard> createState() => _ProductCardState();
@@ -78,18 +73,20 @@ class _ProductCardState extends ConsumerState<ProductCard>
               color: AppColors.surface,
               borderRadius: BorderRadius.circular(22),
               border: Border.all(
-                color: _isHovered ? AppColors.accentGold : AppColors.borderGold.withOpacity(0.4),
+                color: _isHovered
+                    ? AppColors.accentGold
+                    : AppColors.borderGold.withValues(alpha: 0.4),
                 width: _isHovered ? 1.6 : 1.0,
               ),
               boxShadow: [
                 BoxShadow(
                   color: _isHovered
-                      ? AppColors.accentGold.withOpacity(0.28)
+                      ? AppColors.accentGold.withValues(alpha: 0.28)
                       : AppColors.shadowColor,
                   blurRadius: _isHovered ? 20 : 10,
                   spreadRadius: _isHovered ? 1 : 0,
                   offset: _isHovered ? const Offset(0, 8) : const Offset(0, 4),
-                )
+                ),
               ],
             ),
             child: Column(
@@ -99,21 +96,23 @@ class _ProductCardState extends ConsumerState<ProductCard>
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(21)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(21),
+                      ),
                       child: AspectRatio(
                         aspectRatio: 1.0,
                         child: AnimatedScale(
                           scale: _isHovered ? 1.09 : 1.0,
                           duration: const Duration(milliseconds: 320),
-                          child: Hero(
-                            tag: 'product-image-${widget.product.id}',
-                            child: Image.network(
-                              widget.product.mainImage,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Container(
-                                color: AppColors.surfaceVariant,
-                                child: const Icon(Icons.local_florist,
-                                    size: 40, color: AppColors.primary),
+                          child: Image.network(
+                            widget.product.mainImage,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, _, _) => Container(
+                              color: AppColors.surfaceVariant,
+                              child: const Icon(
+                                Icons.local_florist,
+                                size: 40,
+                                color: AppColors.primary,
                               ),
                             ),
                           ),
@@ -140,18 +139,29 @@ class _ProductCardState extends ConsumerState<ProductCard>
                         opacity: _isHovered ? 1.0 : 0.85,
                         duration: const Duration(milliseconds: 180),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.65),
+                            color: Colors.black.withValues(alpha: 0.65),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
                             children: const [
-                              Icon(Icons.remove_red_eye_rounded, size: 12, color: AppColors.accentGold),
+                              Icon(
+                                Icons.remove_red_eye_rounded,
+                                size: 12,
+                                color: AppColors.accentGold,
+                              ),
                               SizedBox(width: 4),
                               Text(
                                 'Quick View',
-                                style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
@@ -171,8 +181,12 @@ class _ProductCardState extends ConsumerState<ProductCard>
                             wishlistNotifier.toggleWishlist(widget.product);
                             ShadcnToast.show(
                               context: context,
-                              title: isWishlisted ? 'Removed from Wishlist' : 'Saved to Wishlist!',
-                              icon: isWishlisted ? Icons.favorite_border : Icons.favorite,
+                              title: isWishlisted
+                                  ? 'Removed from Wishlist'
+                                  : 'Saved to Wishlist!',
+                              icon: isWishlisted
+                                  ? Icons.favorite_border
+                                  : Icons.favorite,
                               iconColor: AppColors.primary,
                             );
                           },
@@ -182,22 +196,28 @@ class _ProductCardState extends ConsumerState<ProductCard>
                               duration: const Duration(milliseconds: 150),
                               padding: const EdgeInsets.all(7),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.92),
+                                color: Colors.white.withValues(alpha: 0.92),
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
                                     color: isWishlisted
-                                        ? AppColors.primary.withOpacity(0.3)
+                                        ? AppColors.primary.withValues(
+                                            alpha: 0.3,
+                                          )
                                         : Colors.black12,
                                     blurRadius: 6,
                                     offset: const Offset(0, 2),
-                                  )
+                                  ),
                                 ],
                               ),
                               child: Icon(
-                                isWishlisted ? Icons.favorite : Icons.favorite_border,
+                                isWishlisted
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
                                 size: 18,
-                                color: isWishlisted ? AppColors.primary : AppColors.textSecondary,
+                                color: isWishlisted
+                                    ? AppColors.primary
+                                    : AppColors.textSecondary,
                               ),
                             ),
                           ),
@@ -233,7 +253,10 @@ class _ProductCardState extends ConsumerState<ProductCard>
                             label: widget.product.fragranceFamily,
                             variant: ShadcnBadgeVariant.gold,
                             fontSize: 9,
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
                           ),
                         ],
                       ),
@@ -287,7 +310,9 @@ class _ProductCardState extends ConsumerState<ProductCard>
                             cursor: SystemMouseCursors.click,
                             child: GestureDetector(
                               onTap: () {
-                                ref.read(cartProvider.notifier).addToCart(widget.product);
+                                ref
+                                    .read(cartProvider.notifier)
+                                    .addToCart(widget.product);
                                 ShadcnToast.show(
                                   context: context,
                                   title: 'Added to Shopping Bag!',
@@ -299,14 +324,18 @@ class _ProductCardState extends ConsumerState<ProductCard>
                                 duration: const Duration(milliseconds: 180),
                                 padding: const EdgeInsets.all(9),
                                 decoration: BoxDecoration(
-                                  color: _isHovered ? AppColors.primaryDark : AppColors.primary,
+                                  color: _isHovered
+                                      ? AppColors.primaryDark
+                                      : AppColors.primary,
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AppColors.primary.withOpacity(0.3),
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.3,
+                                      ),
                                       blurRadius: _isHovered ? 8 : 4,
                                       offset: const Offset(0, 2),
-                                    )
+                                    ),
                                   ],
                                 ),
                                 child: const Icon(
