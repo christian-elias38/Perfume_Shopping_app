@@ -39,22 +39,22 @@ class ShadcnBadge extends StatelessWidget {
         border = Border.all(color: AppColors.borderGold);
         break;
       case ShadcnBadgeVariant.gold:
-        bg = AppColors.accentGold.withOpacity(0.18);
+        bg = AppColors.accentGold.withValues(alpha: 0.18);
         textCol = AppColors.primary;
-        border = Border.all(color: AppColors.accentGold.withOpacity(0.5));
+        border = Border.all(color: AppColors.accentGold.withValues(alpha: 0.5));
         break;
       case ShadcnBadgeVariant.destructive:
-        bg = AppColors.error.withOpacity(0.15);
+        bg = AppColors.error.withValues(alpha: 0.15);
         textCol = AppColors.error;
-        border = Border.all(color: AppColors.error.withOpacity(0.3));
+        border = Border.all(color: AppColors.error.withValues(alpha: 0.3));
         break;
       case ShadcnBadgeVariant.success:
-        bg = AppColors.success.withOpacity(0.15);
+        bg = AppColors.success.withValues(alpha: 0.15);
         textCol = AppColors.success;
-        border = Border.all(color: AppColors.success.withOpacity(0.3));
+        border = Border.all(color: AppColors.success.withValues(alpha: 0.3));
         break;
       case ShadcnBadgeVariant.glass:
-        bg = Colors.white.withOpacity(0.85);
+        bg = Colors.white.withValues(alpha: 0.85);
         textCol = AppColors.primary;
         border = Border.all(color: AppColors.accentGold);
         break;
@@ -74,7 +74,7 @@ class ShadcnBadge extends StatelessWidget {
         boxShadow: variant == ShadcnBadgeVariant.gold || variant == ShadcnBadgeVariant.defaultBadge
             ? [
                 BoxShadow(
-                  color: bg.withOpacity(0.25),
+                  color: bg.withValues(alpha: 0.25),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
                 )
