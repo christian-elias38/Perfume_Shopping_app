@@ -44,9 +44,9 @@ class ShadcnDialog extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 500),
         decoration: BoxDecoration(
-          color: AppColors.surface.withOpacity(0.95),
+          color: AppColors.surface.withValues(alpha: 0.95),
           borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: AppColors.borderGold.withOpacity(0.6), width: 1.5),
+          border: Border.all(color: AppColors.borderGold.withValues(alpha: 0.6), width: 1.5),
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
