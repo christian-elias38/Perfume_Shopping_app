@@ -35,23 +35,23 @@ class _BackendStatusBannerState extends State<BackendStatusBanner> {
         gradient: LinearGradient(
           colors: isOffline
               ? [
-                  AppColors.accentGold.withOpacity(0.18),
-                  AppColors.primaryLight.withOpacity(0.12),
+                  AppColors.accentGold.withValues(alpha: 0.18),
+                  AppColors.primaryLight.withValues(alpha: 0.12),
                 ]
               : [
-                  AppColors.success.withOpacity(0.15),
-                  AppColors.accentGold.withOpacity(0.1),
+                  AppColors.success.withValues(alpha: 0.15),
+                  AppColors.accentGold.withValues(alpha: 0.1),
                 ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isOffline ? AppColors.accentGold.withOpacity(0.4) : AppColors.success.withOpacity(0.4),
+          color: isOffline ? AppColors.accentGold.withValues(alpha: 0.4) : AppColors.success.withValues(alpha: 0.4),
         ),
         boxShadow: [
           BoxShadow(
-            color: (isOffline ? AppColors.accentGold : AppColors.success).withOpacity(0.08),
+            color: (isOffline ? AppColors.accentGold : AppColors.success).withValues(alpha: 0.08),
             blurRadius: 8,
             offset: const Offset(0, 3),
           )
@@ -62,7 +62,7 @@ class _BackendStatusBannerState extends State<BackendStatusBanner> {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: isOffline ? AppColors.accentGold.withOpacity(0.2) : AppColors.success.withOpacity(0.2),
+              color: isOffline ? AppColors.accentGold.withValues(alpha: 0.2) : AppColors.success.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: Icon(
