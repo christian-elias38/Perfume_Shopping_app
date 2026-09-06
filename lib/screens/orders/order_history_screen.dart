@@ -44,7 +44,7 @@ class OrderHistoryScreen extends ConsumerWidget {
               : ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemCount: orderState.orders.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
+                  separatorBuilder: (_, _) => const SizedBox(height: 16),
                   itemBuilder: (context, index) {
                     final order = orderState.orders[index];
                     final dateStr = DateFormat('MMM dd, yyyy • hh:mm a').format(order.createdAt);
@@ -79,7 +79,7 @@ class OrderHistoryScreen extends ConsumerWidget {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: _getStatusColor(order.status).withOpacity(0.15),
+                                  color: _getStatusColor(order.status).withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
