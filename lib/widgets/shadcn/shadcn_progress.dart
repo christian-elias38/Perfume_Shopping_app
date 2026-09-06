@@ -59,7 +59,7 @@ class ShadcnProgress extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.inputBackground,
             borderRadius: BorderRadius.circular(height / 2),
-            border: Border.all(color: AppColors.border.withOpacity(0.6)),
+            border: Border.all(color: AppColors.border.withValues(alpha: 0.6)),
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -74,13 +74,13 @@ class ShadcnProgress extends StatelessWidget {
                       gradient: LinearGradient(
                         colors: [
                           progressColor,
-                          progressColor.withOpacity(0.85),
+                          progressColor.withValues(alpha: 0.85),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(height / 2),
                       boxShadow: [
                         BoxShadow(
-                          color: progressColor.withOpacity(0.4),
+                          color: progressColor.withValues(alpha: 0.4),
                           blurRadius: 6,
                           offset: const Offset(0, 2),
                         )
