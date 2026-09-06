@@ -45,7 +45,7 @@ class _ShadcnAccordionState extends State<ShadcnAccordion> {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.borderGold.withOpacity(0.5)),
+        border: Border.all(color: AppColors.borderGold.withValues(alpha: 0.5)),
       ),
       child: Column(
         children: List.generate(widget.items.length, (index) {
@@ -111,7 +111,7 @@ class _ShadcnAccordionState extends State<ShadcnAccordion> {
               if (!isLast)
                 Divider(
                   height: 1,
-                  color: AppColors.border.withOpacity(0.6),
+                  color: AppColors.border.withValues(alpha: 0.6),
                 ),
             ],
           );
