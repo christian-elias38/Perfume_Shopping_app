@@ -118,7 +118,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                                   child: Image.network(
                                     imgUrl,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (_, __, ___) => Container(
+                                    errorBuilder: (_, _, _) => Container(
                                       color: AppColors.primaryDark,
                                       child: const Icon(Icons.local_florist, size: 80, color: AppColors.accentGold),
                                     ),
@@ -389,7 +389,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                                       decoration: BoxDecoration(
                                         color: AppColors.surface,
                                         borderRadius: BorderRadius.circular(16),
-                                        border: Border.all(color: AppColors.borderGold.withOpacity(0.4)),
+                                        border: Border.all(color: AppColors.borderGold.withValues(alpha: 0.4)),
                                       ),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -427,7 +427,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  border: Border(top: BorderSide(color: AppColors.borderGold.withOpacity(0.4))),
+                  border: Border(top: BorderSide(color: AppColors.borderGold.withValues(alpha: 0.4))),
                   boxShadow: const [
                     BoxShadow(
                       color: AppColors.shadowColor,
