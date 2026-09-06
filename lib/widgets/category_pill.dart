@@ -55,8 +55,8 @@ class _CategoryPillState extends State<CategoryPill> {
                     if (isSel || _isHovered)
                       BoxShadow(
                         color: isSel
-                            ? AppColors.primary.withOpacity(0.35)
-                            : AppColors.accentGold.withOpacity(0.25),
+                            ? AppColors.primary.withValues(alpha: 0.35)
+                            : AppColors.accentGold.withValues(alpha: 0.25),
                         blurRadius: _isHovered ? 12 : 8,
                         spreadRadius: _isHovered ? 1 : 0,
                         offset: const Offset(0, 4),
@@ -67,7 +67,7 @@ class _CategoryPillState extends State<CategoryPill> {
                   child: Image.network(
                     widget.category.imageUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Icon(
+                    errorBuilder: (_, _, _) => Icon(
                       Icons.spa_outlined,
                       color: isSel ? Colors.white : AppColors.primary,
                       size: 28,
