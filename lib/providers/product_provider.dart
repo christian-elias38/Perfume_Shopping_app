@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/product_model.dart';
+import '../models/review_model.dart';
 import 'category_provider.dart';
 
 final productsProvider = FutureProvider<List<ProductModel>>((ref) async {
@@ -19,19 +20,33 @@ final productsProvider = FutureProvider<List<ProductModel>>((ref) async {
   );
 });
 
-final featuredProductsProvider = FutureProvider<List<ProductModel>>((ref) async {
+final featuredProductsProvider = FutureProvider<List<ProductModel>>((
+  ref,
+) async {
   final productService = ref.watch(productServiceProvider);
   final all = await productService.getProducts();
   return all.where((p) => p.isFeatured || p.isBestSeller).toList();
 });
 
-final bestSellersProductsProvider = FutureProvider<List<ProductModel>>((ref) async {
+final bestSellersProductsProvider = FutureProvider<List<ProductModel>>((
+  ref,
+) async {
   final productService = ref.watch(productServiceProvider);
   final all = await productService.getProducts();
   return all.where((p) => p.isBestSeller).toList();
 });
 
-final productDetailProvider = FutureProvider.family<ProductModel?, String>((ref, id) async {
+final productDetailProvider = FutureProvider.family<ProductModel?, String>((
+  ref,
+  id,
+) async {
   final productService = ref.watch(productServiceProvider);
   return productService.getProductById(id);
 });
+
+final productReviewsProvider = FutureProvider.family<List<ReviewModel>, String>(
+  (ref, id) async {
+    final productService = ref.watch(productServiceProvider);
+    return productService.getProductReviews(id);
+  },
+);
