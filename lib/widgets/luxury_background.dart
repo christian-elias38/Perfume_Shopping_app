@@ -85,8 +85,8 @@ class _LuxuryBackgroundState extends State<LuxuryBackground>
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.accentGold.withOpacity(0.18),
-                        AppColors.accentGoldLight.withOpacity(0.08),
+                        AppColors.accentGold.withValues(alpha: 0.18),
+                        AppColors.accentGoldLight.withValues(alpha: 0.08),
                         Colors.transparent,
                       ],
                     ),
@@ -114,8 +114,8 @@ class _LuxuryBackgroundState extends State<LuxuryBackground>
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.primaryLight.withOpacity(0.12),
-                        AppColors.accentGold.withOpacity(0.05),
+                        AppColors.primaryLight.withValues(alpha: 0.12),
+                        AppColors.accentGold.withValues(alpha: 0.05),
                         Colors.transparent,
                       ],
                     ),
@@ -144,7 +144,7 @@ class _LuxuryBackgroundState extends State<LuxuryBackground>
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
-                          AppColors.accentGold.withOpacity(0.06),
+                          AppColors.accentGold.withValues(alpha: 0.06),
                           Colors.transparent,
                         ],
                       ),
@@ -220,7 +220,7 @@ class _MistParticlePainter extends CustomPainter {
       final posY = curY * size.height;
 
       paint.color = (isDark ? AppColors.accentGold : AppColors.accentGold)
-          .withOpacity(p.opacity * (0.6 + 0.4 * math.sin(progress * math.pi * 2 + p.x * 5)));
+          .withValues(alpha: p.opacity * (0.6 + 0.4 * math.sin(progress * math.pi * 2 + p.x * 5)));
 
       canvas.drawCircle(Offset(posX, posY), p.size, paint);
     }
