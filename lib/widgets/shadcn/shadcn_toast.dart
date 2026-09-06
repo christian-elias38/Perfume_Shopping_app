@@ -22,9 +22,9 @@ class ShadcnToast {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         content: Container(
           decoration: BoxDecoration(
-            color: AppColors.primaryDark.withOpacity(0.92),
+            color: AppColors.primaryDark.withValues(alpha: 0.92),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.borderGold.withOpacity(0.6), width: 1.2),
+            border: Border.all(color: AppColors.borderGold.withValues(alpha: 0.6), width: 1.2),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
@@ -44,7 +44,7 @@ class ShadcnToast {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: iconColor.withOpacity(0.2),
+                        color: iconColor.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(icon, color: iconColor, size: 20),
@@ -68,7 +68,7 @@ class ShadcnToast {
                             Text(
                               message,
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
+                                color: Colors.white.withValues(alpha: 0.8),
                                 fontSize: 12,
                               ),
                             ),
