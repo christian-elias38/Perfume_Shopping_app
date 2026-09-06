@@ -25,9 +25,9 @@ class ShadcnTabs extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant.withOpacity(0.9),
+        color: AppColors.surfaceVariant.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: AppColors.borderGold.withOpacity(0.4)),
+        border: Border.all(color: AppColors.borderGold.withValues(alpha: 0.4)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -50,7 +50,7 @@ class ShadcnTabs extends StatelessWidget {
                     boxShadow: isSelected
                         ? [
                             BoxShadow(
-                              color: AppColors.primary.withOpacity(0.3),
+                              color: AppColors.primary.withValues(alpha: 0.3),
                               blurRadius: 8,
                               offset: const Offset(0, 3),
                             )
