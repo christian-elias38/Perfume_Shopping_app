@@ -20,7 +20,7 @@ class FragranceNotesView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant.withOpacity(0.6),
+        color: AppColors.surfaceVariant.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border),
       ),
