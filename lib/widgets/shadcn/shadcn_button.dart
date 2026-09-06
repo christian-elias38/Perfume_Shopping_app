@@ -48,7 +48,7 @@ class _ShadcnButtonState extends State<ShadcnButton> {
         border = Border.all(color: AppColors.border);
         break;
       case ShadcnButtonVariant.outline:
-        bg = _isHovered ? AppColors.accentGoldLight.withOpacity(0.4) : Colors.transparent;
+        bg = _isHovered ? AppColors.accentGoldLight.withValues(alpha: 0.4) : Colors.transparent;
         textCol = AppColors.primary;
         border = Border.all(
           color: _isHovered ? AppColors.accentGold : AppColors.borderGold,
@@ -56,22 +56,22 @@ class _ShadcnButtonState extends State<ShadcnButton> {
         );
         break;
       case ShadcnButtonVariant.ghost:
-        bg = _isHovered ? AppColors.primary.withOpacity(0.08) : Colors.transparent;
+        bg = _isHovered ? AppColors.primary.withValues(alpha: 0.08) : Colors.transparent;
         textCol = AppColors.primary;
         break;
       case ShadcnButtonVariant.gold:
-        bg = _isHovered ? AppColors.accentGold : AppColors.accentGold.withOpacity(0.9);
+        bg = _isHovered ? AppColors.accentGold : AppColors.accentGold.withValues(alpha: 0.9);
         textCol = AppColors.primaryDark;
         shadow = [
           BoxShadow(
-            color: AppColors.accentGold.withOpacity(_isHovered ? 0.4 : 0.25),
+            color: AppColors.accentGold.withValues(alpha: _isHovered ? 0.4 : 0.25),
             blurRadius: _isHovered ? 12 : 6,
             offset: const Offset(0, 4),
           )
         ];
         break;
       case ShadcnButtonVariant.destructive:
-        bg = _isHovered ? AppColors.error : AppColors.error.withOpacity(0.9);
+        bg = _isHovered ? AppColors.error : AppColors.error.withValues(alpha: 0.9);
         textCol = Colors.white;
         break;
       case ShadcnButtonVariant.primary:
@@ -79,7 +79,7 @@ class _ShadcnButtonState extends State<ShadcnButton> {
         textCol = Colors.white;
         shadow = [
           BoxShadow(
-            color: AppColors.primary.withOpacity(_isHovered ? 0.35 : 0.2),
+            color: AppColors.primary.withValues(alpha: _isHovered ? 0.35 : 0.2),
             blurRadius: _isHovered ? 14 : 8,
             offset: const Offset(0, 4),
           )
@@ -122,7 +122,7 @@ class _ShadcnButtonState extends State<ShadcnButton> {
         duration: const Duration(milliseconds: 180),
         padding: padding,
         decoration: BoxDecoration(
-          color: widget.onPressed == null ? bg.withOpacity(0.5) : bg,
+          color: widget.onPressed == null ? bg.withValues(alpha: 0.5) : bg,
           borderRadius: BorderRadius.circular(30),
           border: border,
           boxShadow: widget.onPressed == null ? [] : shadow,
