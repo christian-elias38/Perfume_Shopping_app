@@ -46,14 +46,14 @@ class _ShadcnCardState extends State<ShadcnCard> {
 
     switch (widget.variant) {
       case ShadcnCardVariant.glass:
-        backgroundColor = Colors.white.withOpacity(_isHovered ? 0.85 : 0.70);
+        backgroundColor = Colors.white.withValues(alpha: _isHovered ? 0.85 : 0.70);
         border = Border.all(
-          color: _isHovered ? AppColors.accentGold : AppColors.borderGold.withOpacity(0.5),
+          color: _isHovered ? AppColors.accentGold : AppColors.borderGold.withValues(alpha: 0.5),
           width: _isHovered ? 1.5 : 1.0,
         );
         boxShadow = [
           BoxShadow(
-            color: _isHovered ? AppColors.accentGold.withOpacity(0.22) : AppColors.shadowColor,
+            color: _isHovered ? AppColors.accentGold.withValues(alpha: 0.22) : AppColors.shadowColor,
             blurRadius: _isHovered ? 18 : 10,
             offset: const Offset(0, 6),
           )
@@ -89,7 +89,7 @@ class _ShadcnCardState extends State<ShadcnCard> {
         );
         boxShadow = [
           BoxShadow(
-            color: _isHovered ? AppColors.accentGold.withOpacity(0.2) : AppColors.shadowColor,
+            color: _isHovered ? AppColors.accentGold.withValues(alpha: 0.2) : AppColors.shadowColor,
             blurRadius: _isHovered ? 16 : 8,
             offset: _isHovered ? const Offset(0, 6) : const Offset(0, 3),
           )
