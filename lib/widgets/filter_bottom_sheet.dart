@@ -16,7 +16,15 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
   late double maxPrice;
   late String selectedSort;
 
-  final List<String> families = ['All', 'Fresh', 'Floral', 'Gourmand', 'Spicy', 'Woody', 'Rose'];
+  final List<String> families = [
+    'All',
+    'Fresh',
+    'Floral',
+    'Gourmand',
+    'Spicy',
+    'Woody',
+    'Rose',
+  ];
   final Map<String, String> sortOptions = {
     'best_seller': 'Most Popular / Best Sellers',
     'price_asc': 'Price: Low to High',
@@ -145,22 +153,24 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          Column(
-            children: sortOptions.entries.map((entry) {
-              return RadioListTile<String>(
-                value: entry.key,
-                groupValue: selectedSort,
-                title: Text(
-                  entry.value,
-                  style: const TextStyle(fontSize: 14),
-                ),
-                activeColor: AppColors.primary,
-                contentPadding: EdgeInsets.zero,
-                onChanged: (val) {
-                  if (val != null) setState(() => selectedSort = val);
-                },
-              );
-            }).toList(),
+          RadioGroup<String>(
+            groupValue: selectedSort,
+            onChanged: (val) {
+              if (val != null) setState(() => selectedSort = val);
+            },
+            child: Column(
+              children: sortOptions.entries.map((entry) {
+                return RadioListTile<String>(
+                  value: entry.key,
+                  title: Text(
+                    entry.value,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  activeColor: AppColors.primary,
+                  contentPadding: EdgeInsets.zero,
+                );
+              }).toList(),
+            ),
           ),
           const SizedBox(height: 20),
 
@@ -168,8 +178,11 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
           CustomButton(
             text: 'APPLY FILTERS',
             onPressed: () {
-              ref.read(selectedFragranceFamilyProvider.notifier).state = selectedFamily;
-              ref.read(priceRangeProvider.notifier).state = maxPrice == 400 ? null : maxPrice;
+              ref.read(selectedFragranceFamilyProvider.notifier).state =
+                  selectedFamily;
+              ref.read(priceRangeProvider.notifier).state = maxPrice == 400
+                  ? null
+                  : maxPrice;
               ref.read(sortByProvider.notifier).state = selectedSort;
               Navigator.pop(context);
             },
