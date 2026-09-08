@@ -23,6 +23,7 @@ class ProductService {
 
   Future<List<ProductModel>> getProducts({
     String? categoryId,
+    String? gender,
     String? fragranceFamily,
     String? searchQuery,
     double? minPrice,
@@ -61,6 +62,15 @@ class ProductService {
       products = products.where((p) => 
         p.fragranceFamily.toLowerCase() == fragranceFamily.toLowerCase()
       ).toList();
+    }
+
+    if (gender != null && gender.isNotEmpty && gender != 'All') {
+      products = products.where((p) {
+        if (gender == 'Women') return p.gender == 'Pour Femme';
+        if (gender == 'Men') return p.gender == 'Pour Homme';
+        if (gender == 'Unisex') return p.gender == 'Unisex';
+        return true;
+      }).toList();
     }
 
     if (searchQuery != null && searchQuery.trim().isNotEmpty) {
