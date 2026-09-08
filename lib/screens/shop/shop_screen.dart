@@ -13,17 +13,15 @@ class ShopScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoriesAsync = ref.watch(categoriesProvider);
-    final productsAsync = ref.watch(productsProvider);
-
-    final selectedCategory = ref.watch(selectedCategoryProvider);
+    final selectedGender = ref.watch(selectedGenderProvider);
     final selectedFamily = ref.watch(selectedFragranceFamilyProvider);
+    const genderFilters = ['All', 'Women', 'Men', 'Unisex'];
 
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text('Haute Shop Collection'),
+        title: const Text('Shop'),
         actions: [
           MouseRegion(
             cursor: SystemMouseCursors.click,
@@ -45,70 +43,35 @@ class ShopScreen extends ConsumerWidget {
       body: LuxuryBackground(
         child: Column(
           children: [
-            // Category Selector Chips
-            categoriesAsync.when(
-              loading: () => const SizedBox(height: 50),
-              error: (_, _) => const SizedBox(),
-              data: (categories) {
-                return SizedBox(
-                  height: 48,
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length + 1,
-                    separatorBuilder: (_, _) => const SizedBox(width: 8),
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        final isSel = selectedCategory == 'All';
-                        return MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: ChoiceChip(
-                            label: const Text('All Categories'),
-                            selected: isSel,
-                            onSelected: (_) {
-                              ref.read(selectedCategoryProvider.notifier).state = 'All';
-                            },
-                            selectedColor: AppColors.primary,
-                            backgroundColor: AppColors.surfaceVariant,
-                            labelStyle: TextStyle(
-                              color: isSel ? Colors.white : AppColors.textPrimary,
-                              fontWeight: isSel ? FontWeight.bold : FontWeight.normal,
-                              fontSize: 13,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                        );
-                      }
-
-                      final cat = categories[index - 1];
-                      final isSel = selectedCategory == cat.id;
-
-                      return MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: ChoiceChip(
-                          label: Text(cat.name),
-                          selected: isSel,
-                          onSelected: (_) {
-                            ref.read(selectedCategoryProvider.notifier).state = cat.id;
-                          },
-                          selectedColor: AppColors.primary,
-                          backgroundColor: AppColors.surfaceVariant,
-                          labelStyle: TextStyle(
-                            color: isSel ? Colors.white : AppColors.textPrimary,
-                            fontWeight: isSel ? FontWeight.bold : FontWeight.normal,
-                            fontSize: 13,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                      );
+            SizedBox(
+              height: 48,
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                scrollDirection: Axis.horizontal,
+                itemCount: genderFilters.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 8),
+                itemBuilder: (context, index) {
+                  final label = genderFilters[index];
+                  final isSel = selectedGender == label;
+                  return ChoiceChip(
+                    label: Text(label),
+                    selected: isSel,
+                    onSelected: (_) {
+                      ref.read(selectedGenderProvider.notifier).state = label;
                     },
-                  ),
-                );
-              },
+                    selectedColor: AppColors.primary,
+                    backgroundColor: AppColors.surfaceVariant,
+                    labelStyle: TextStyle(
+                      color: isSel ? Colors.white : AppColors.textPrimary,
+                      fontWeight: isSel ? FontWeight.bold : FontWeight.w500,
+                      fontSize: 13,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  );
+                },
+              ),
             ),
 
             const SizedBox(height: 8),
@@ -133,7 +96,7 @@ class ShopScreen extends ConsumerWidget {
 
             // Products Grid View with Entrance Animations
             Expanded(
-              child: productsAsync.when(
+              child: ref.watch(productsProvider).when(
                 loading: () => const Center(
                   child: CircularProgressIndicator(color: AppColors.primary),
                 ),
@@ -160,6 +123,7 @@ class ShopScreen extends ConsumerWidget {
                             child: TextButton(
                               onPressed: () {
                                 ref.read(selectedCategoryProvider.notifier).state = 'All';
+                                ref.read(selectedGenderProvider.notifier).state = 'All';
                                 ref.read(selectedFragranceFamilyProvider.notifier).state = 'All';
                                 ref.read(priceRangeProvider.notifier).state = null;
                               },
