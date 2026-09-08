@@ -9,10 +9,8 @@ import '../../widgets/category_pill.dart';
 import '../../widgets/luxury_background.dart';
 import '../../widgets/luxury_banner.dart';
 import '../../widgets/product_card.dart';
-import '../../widgets/scent_quiz_modal.dart';
-import '../../widgets/shadcn/shadcn_badge.dart';
-import '../../widgets/shadcn/shadcn_button.dart';
-import '../../widgets/shadcn/shadcn_card.dart';
+import '../categories/categories_screen.dart';
+import '../quiz/scent_quiz_screen.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -162,7 +160,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 // Backend Status Banner
                 const BackendStatusBanner(showOnlyIfOffline: true),
 
-                // Command-Style Search Trigger Bar
+                // Hero Luxury Banner
+                LuxuryBanner(
+                  title: 'Timeless Elegance',
+                  subtitle: 'EXCLUSIVE COLLECTIONS',
+                  buttonText: 'Shop Now',
+                  imageUrl: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80',
+                  onTap: () {
+                    if (widget.onNavigateTab != null) widget.onNavigateTab!(1);
+                  },
+                ),
+
+                const SizedBox(height: 10),
+
+                // Search Bar
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
                   child: MouseRegion(
@@ -188,14 +199,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             color: _searchBarHovered ? AppColors.accentGold : AppColors.border,
                             width: _searchBarHovered ? 1.5 : 1.0,
                           ),
-                          boxShadow: [
-                            if (_searchBarHovered)
-                              BoxShadow(
-                                color: AppColors.accentGold.withValues(alpha: 0.2),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              )
-                          ],
                         ),
                         child: Row(
                           children: [
@@ -206,93 +209,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                             const SizedBox(width: 10),
                             const Text(
-                              'Find Your Signature Scent...',
+                              'Search fragrances...',
                               style: TextStyle(
                                 color: AppColors.textLight,
                                 fontSize: 14,
                               ),
-                            ),
-                            const Spacer(),
-                            ShadcnBadge(
-                              label: '⌘K Search',
-                              variant: ShadcnBadgeVariant.outline,
-                              fontSize: 10,
                             ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 10),
-
-                // Interactive Scent Finder Quiz Card Trigger
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: ShadcnCard(
-                    variant: ShadcnCardVariant.glass,
-                    onTap: () {
-                      ScentQuizModal.show(context);
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [AppColors.primary, AppColors.primaryLight],
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.auto_awesome_rounded, color: AppColors.accentGold, size: 24),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                '✨ Scent Finder Quiz',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                              SizedBox(height: 2),
-                              Text(
-                                'Match your mood & occasion in 2 simple steps',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const ShadcnButton(
-                          text: 'Quiz',
-                          variant: ShadcnButtonVariant.gold,
-                          size: ShadcnButtonSize.sm,
-                          onPressed: null, // Card handles tap
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 14),
-
-                // Hero Luxury Banner
-                LuxuryBanner(
-                  title: 'Affordable Luxury Fragrances Within Your Reach',
-                  subtitle: 'SPECIAL DECANTS & EXCLUSIVE EXTRACTS',
-                  buttonText: 'Shop Decants',
-                  imageUrl: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80',
-                  onTap: () {
-                    if (widget.onNavigateTab != null) widget.onNavigateTab!(1);
-                  },
                 ),
 
                 const SizedBox(height: 16),
@@ -315,7 +242,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         cursor: SystemMouseCursors.click,
                         child: TextButton(
                           onPressed: () {
-                            if (widget.onNavigateTab != null) widget.onNavigateTab!(1);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => const CategoriesScreen()),
+                            );
                           },
                           child: const Text(
                             'View All',
@@ -371,6 +301,76 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         },
                       );
                     },
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Find Your Signature Scent Quiz Banner
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const ScentQuizScreen()),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [AppColors.primaryDark, AppColors.primary],
+                        ),
+                        borderRadius: BorderRadius.circular(22),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: AppColors.shadowColor,
+                            blurRadius: 12,
+                            offset: Offset(0, 6),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  'Find Your Signature Scent',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  'Take our quick quiz to discover your perfect match',
+                                  style: TextStyle(fontSize: 12, color: Colors.white70),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: AppColors.accentGold,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Text(
+                              'Take Quiz',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primaryDark,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
 
