@@ -1,91 +1,93 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../core/constants/app_colors.dart';
 import '../onboarding/onboarding_screen.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  Timer? _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer(const Duration(seconds: 2), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-        );
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
+  static const _heroImage =
+      'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=80';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryDark,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary,
-                border: Border.all(color: AppColors.accentGold, width: 2),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 20,
-                    offset: Offset(0, 10),
-                  )
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(_heroImage, fit: BoxFit.cover),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  AppColors.primaryDark.withValues(alpha: 0.35),
+                  AppColors.primaryDark.withValues(alpha: 0.88),
                 ],
               ),
-              child: const Icon(
-                Icons.local_florist_rounded,
-                size: 54,
-                color: AppColors.accentGold,
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+              child: Column(
+                children: [
+                  const Spacer(flex: 2),
+                  Text(
+                    'PARFUMERIE',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 6,
+                      color: AppColors.accentGold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Haute Parfumerie House',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 14,
+                      letterSpacing: 2,
+                      color: Colors.white.withValues(alpha: 0.85),
+                    ),
+                  ),
+                  const Spacer(flex: 3),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const OnboardingScreen(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.accentGold,
+                        foregroundColor: AppColors.primaryDark,
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        'Get Started',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
               ),
             ),
-            const SizedBox(height: 24),
-            const Text(
-              'PARFUMERIE',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 4,
-                color: AppColors.accentGold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Elegance In Every Spray',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.white.withValues(alpha: 0.8),
-                letterSpacing: 1.5,
-              ),
-            ),
-            const SizedBox(height: 48),
-            const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.accentGold),
-              strokeWidth: 2,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
