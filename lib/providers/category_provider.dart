@@ -10,6 +10,7 @@ final categoriesProvider = FutureProvider<List<CategoryModel>>((ref) async {
 });
 
 final selectedCategoryProvider = StateProvider<String>((ref) => 'All');
+final selectedGenderProvider = StateProvider<String>((ref) => 'All');
 final selectedFragranceFamilyProvider = StateProvider<String>((ref) => 'All');
 final searchQueryProvider = StateProvider<String>((ref) => '');
 final priceRangeProvider = StateProvider<double?>((ref) => null);
