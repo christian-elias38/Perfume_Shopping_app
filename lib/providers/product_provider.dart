@@ -6,6 +6,7 @@ import 'category_provider.dart';
 final productsProvider = FutureProvider<List<ProductModel>>((ref) async {
   final productService = ref.watch(productServiceProvider);
   final category = ref.watch(selectedCategoryProvider);
+  final gender = ref.watch(selectedGenderProvider);
   final family = ref.watch(selectedFragranceFamilyProvider);
   final query = ref.watch(searchQueryProvider);
   final maxPrice = ref.watch(priceRangeProvider);
@@ -13,6 +14,7 @@ final productsProvider = FutureProvider<List<ProductModel>>((ref) async {
 
   return productService.getProducts(
     categoryId: category == 'All' ? null : category,
+    gender: gender == 'All' ? null : gender,
     fragranceFamily: family == 'All' ? null : family,
     searchQuery: query,
     maxPrice: maxPrice,
