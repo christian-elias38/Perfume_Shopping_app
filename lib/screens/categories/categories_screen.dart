@@ -22,11 +22,12 @@ class CategoriesScreen extends ConsumerWidget {
           loading: () => const Center(
             child: CircularProgressIndicator(color: AppColors.primary),
           ),
-          error: (_, __) => const Center(child: Text('Unable to load categories')),
+          error: (_, _) =>
+              const Center(child: Text('Unable to load categories')),
           data: (categories) => ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: categories.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            separatorBuilder: (_, _) => const SizedBox(height: 14),
             itemBuilder: (context, index) {
               final cat = categories[index];
               return GestureDetector(
