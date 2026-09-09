@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants/app_colors.dart';
@@ -8,11 +9,49 @@ import '../../widgets/luxury_background.dart';
 import '../../widgets/product_card.dart';
 import '../../widgets/shadcn/shadcn_badge.dart';
 
-class ShopScreen extends ConsumerWidget {
+class ShopScreen extends ConsumerStatefulWidget {
   const ShopScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ShopScreen> createState() => _ShopScreenState();
+}
+
+class _ShopScreenState extends ConsumerState<ShopScreen> {
+  final ScrollController _genderScrollController = ScrollController();
+  Timer? _genderScrollTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _genderScrollController.addListener(_loopGenderFilters);
+    _genderScrollTimer = Timer.periodic(const Duration(milliseconds: 50), (_) {
+      if (!_genderScrollController.hasClients) return;
+      final maxScroll = _genderScrollController.position.maxScrollExtent;
+      if (maxScroll > 0) {
+        _genderScrollController.jumpTo(_genderScrollController.offset + 0.35);
+      }
+    });
+  }
+
+  void _loopGenderFilters() {
+    if (!_genderScrollController.hasClients) return;
+
+    final midpoint = _genderScrollController.position.maxScrollExtent / 2;
+    if (midpoint > 0 && _genderScrollController.offset >= midpoint) {
+      _genderScrollController.jumpTo(_genderScrollController.offset - midpoint);
+    }
+  }
+
+  @override
+  void dispose() {
+    _genderScrollTimer?.cancel();
+    _genderScrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ref = this.ref;
     final selectedGender = ref.watch(selectedGenderProvider);
     final selectedFamily = ref.watch(selectedFragranceFamilyProvider);
     const genderFilters = ['All', 'Women', 'Men', 'Unisex'];
@@ -46,12 +85,13 @@ class ShopScreen extends ConsumerWidget {
             SizedBox(
               height: 48,
               child: ListView.separated(
+                controller: _genderScrollController,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 scrollDirection: Axis.horizontal,
-                itemCount: genderFilters.length,
+                itemCount: genderFilters.length * 2,
                 separatorBuilder: (_, _) => const SizedBox(width: 8),
                 itemBuilder: (context, index) {
-                  final label = genderFilters[index];
+                  final label = genderFilters[index % genderFilters.length];
                   final isSel = selectedGender == label;
                   return ChoiceChip(
                     label: Text(label),
@@ -183,7 +223,7 @@ class ShopScreen extends ConsumerWidget {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 0.60,
+                              childAspectRatio: 0.54,
                               crossAxisSpacing: 14,
                               mainAxisSpacing: 14,
                             ),
