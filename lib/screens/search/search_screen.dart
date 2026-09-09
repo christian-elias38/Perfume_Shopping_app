@@ -17,7 +17,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   final List<String> popularSearches = [
-    'Oud', 'Vanilla', 'Rose', 'Bergamot', 'Saffron', 'Jasmin', 'Decant'
+    'Oud',
+    'Vanilla',
+    'Rose',
+    'Bergamot',
+    'Saffron',
+    'Jasmin',
+    'Decant',
   ];
 
   @override
@@ -105,7 +111,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                             ),
                             onPressed: () {
                               _searchController.text = tag;
-                              ref.read(searchQueryProvider.notifier).state = tag;
+                              ref.read(searchQueryProvider.notifier).state =
+                                  tag;
                             },
                           ),
                         );
@@ -130,7 +137,11 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.search_off_rounded, size: 64, color: AppColors.accentGold),
+                          const Icon(
+                            Icons.search_off_rounded,
+                            size: 64,
+                            color: AppColors.accentGold,
+                          ),
                           const SizedBox(height: 16),
                           Text(
                             'No fragrances found for "${_searchController.text}"',
@@ -143,7 +154,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                           const SizedBox(height: 6),
                           const Text(
                             'Try searching for Oud, Rose, Vanilla, or Maison Athena',
-                            style: TextStyle(fontSize: 13, color: AppColors.textLight),
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.textLight,
+                            ),
                           ),
                         ],
                       ),
@@ -152,12 +166,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
                   return GridView.builder(
                     padding: const EdgeInsets.all(16),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.62,
-                      crossAxisSpacing: 14,
-                      mainAxisSpacing: 14,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.54,
+                          crossAxisSpacing: 14,
+                          mainAxisSpacing: 14,
+                        ),
                     itemCount: products.length,
                     itemBuilder: (context, index) {
                       return TweenAnimationBuilder<double>(
