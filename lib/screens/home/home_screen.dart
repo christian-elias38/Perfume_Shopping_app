@@ -50,10 +50,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   BoxShadow(
                     color: AppColors.primary.withValues(alpha: 0.3),
                     blurRadius: 6,
-                  )
+                  ),
                 ],
               ),
-              child: const Icon(Icons.local_florist, color: AppColors.accentGold, size: 20),
+              child: const Icon(
+                Icons.local_florist,
+                color: AppColors.accentGold,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 10),
             Column(
@@ -83,7 +87,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           MouseRegion(
             cursor: SystemMouseCursors.click,
             child: IconButton(
-              icon: const Icon(Icons.search_rounded, color: AppColors.primary, size: 24),
+              icon: const Icon(
+                Icons.search_rounded,
+                color: AppColors.primary,
+                size: 24,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -97,7 +105,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Stack(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.shopping_bag_outlined, color: AppColors.primary, size: 24),
+                  icon: const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: AppColors.primary,
+                    size: 24,
+                  ),
                   onPressed: () {
                     if (widget.onNavigateTab != null) {
                       widget.onNavigateTab!(3);
@@ -120,7 +132,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             BoxShadow(
                               color: AppColors.primary.withValues(alpha: 0.4),
                               blurRadius: 4,
-                            )
+                            ),
                           ],
                         ),
                         constraints: const BoxConstraints(
@@ -165,7 +177,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   title: 'Timeless Elegance',
                   subtitle: 'EXCLUSIVE COLLECTIONS',
                   buttonText: 'Shop Now',
-                  imageUrl: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80',
+                  imageUrl:
+                      'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80',
                   onTap: () {
                     if (widget.onNavigateTab != null) widget.onNavigateTab!(1);
                   },
@@ -175,7 +188,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                 // Search Bar
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 6.0,
+                  ),
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     onEnter: (_) => setState(() => _searchBarHovered = true),
@@ -184,19 +200,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => const SearchScreen()),
+                          MaterialPageRoute(
+                            builder: (_) => const SearchScreen(),
+                          ),
                         );
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         decoration: BoxDecoration(
                           color: _searchBarHovered
                               ? Colors.white
-                              : AppColors.inputBackground.withValues(alpha: 0.9),
+                              : AppColors.inputBackground.withValues(
+                                  alpha: 0.9,
+                                ),
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(
-                            color: _searchBarHovered ? AppColors.accentGold : AppColors.border,
+                            color: _searchBarHovered
+                                ? AppColors.accentGold
+                                : AppColors.border,
                             width: _searchBarHovered ? 1.5 : 1.0,
                           ),
                         ),
@@ -204,7 +229,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           children: [
                             Icon(
                               Icons.search_rounded,
-                              color: _searchBarHovered ? AppColors.primary : AppColors.textLight,
+                              color: _searchBarHovered
+                                  ? AppColors.primary
+                                  : AppColors.textLight,
                               size: 20,
                             ),
                             const SizedBox(width: 10),
@@ -244,7 +271,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (_) => const CategoriesScreen()),
+                              MaterialPageRoute(
+                                builder: (_) => const CategoriesScreen(),
+                              ),
                             );
                           },
                           child: const Text(
@@ -266,7 +295,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   height: 105,
                   child: categoriesAsync.when(
                     loading: () => const Center(
-                      child: CircularProgressIndicator(color: AppColors.primary),
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
                     ),
                     error: (_, _) => const SizedBox(),
                     data: (categories) {
@@ -281,8 +312,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             return _AllCategoryCircle(
                               isSelected: isSel,
                               onTap: () {
-                                ref.read(selectedCategoryProvider.notifier).state = 'All';
-                                if (widget.onNavigateTab != null) widget.onNavigateTab!(1);
+                                ref
+                                        .read(selectedCategoryProvider.notifier)
+                                        .state =
+                                    'All';
+                                if (widget.onNavigateTab != null) {
+                                  widget.onNavigateTab!(1);
+                                }
                               },
                             );
                           }
@@ -294,8 +330,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             category: category,
                             isSelected: isSel,
                             onTap: () {
-                              ref.read(selectedCategoryProvider.notifier).state = category.id;
-                              if (widget.onNavigateTab != null) widget.onNavigateTab!(1);
+                              ref
+                                      .read(selectedCategoryProvider.notifier)
+                                      .state =
+                                  category.id;
+                              if (widget.onNavigateTab != null) {
+                                widget.onNavigateTab!(1);
+                              }
                             },
                           );
                         },
@@ -313,7 +354,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const ScentQuizScreen()),
+                        MaterialPageRoute(
+                          builder: (_) => const ScentQuizScreen(),
+                        ),
                       );
                     },
                     child: Container(
@@ -348,13 +391,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 SizedBox(height: 4),
                                 Text(
                                   'Take our quick quiz to discover your perfect match',
-                                  style: TextStyle(fontSize: 12, color: Colors.white70),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white70,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 10,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.accentGold,
                               borderRadius: BorderRadius.circular(20),
@@ -379,11 +428,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 // Best Sellers Section Tag
                 Center(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.accentGold.withValues(alpha: 0.18),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.accentGold.withValues(alpha: 0.5)),
+                      border: Border.all(
+                        color: AppColors.accentGold.withValues(alpha: 0.5),
+                      ),
                     ),
                     child: const Text(
                       '★  BEST SELLERS',
@@ -417,20 +471,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 featuredProductsAsync.when(
                   loading: () => const Padding(
                     padding: EdgeInsets.all(32.0),
-                    child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
+                    ),
                   ),
-                  error: (err, _) => Center(child: Text('Error loading products: $err')),
+                  error: (err, _) =>
+                      Center(child: Text('Error loading products: $err')),
                   data: (products) {
                     return GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.60,
-                        crossAxisSpacing: 14,
-                        mainAxisSpacing: 14,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.54,
+                            crossAxisSpacing: 14,
+                            mainAxisSpacing: 14,
+                          ),
                       itemCount: products.length,
                       itemBuilder: (context, index) {
                         return TweenAnimationBuilder<double>(
@@ -499,11 +559,15 @@ class _AllCategoryCircleState extends State<_AllCategoryCircle> {
                 height: 64,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: widget.isSelected ? AppColors.primary : AppColors.surfaceVariant,
+                  color: widget.isSelected
+                      ? AppColors.primary
+                      : AppColors.surfaceVariant,
                   border: Border.all(
                     color: widget.isSelected
                         ? AppColors.accentGold
-                        : (_isHovered ? AppColors.borderGold : AppColors.border),
+                        : (_isHovered
+                              ? AppColors.borderGold
+                              : AppColors.border),
                     width: widget.isSelected ? 2.5 : (_isHovered ? 2.0 : 1.0),
                   ),
                   boxShadow: [
@@ -514,7 +578,7 @@ class _AllCategoryCircleState extends State<_AllCategoryCircle> {
                             : AppColors.accentGold.withValues(alpha: 0.25),
                         blurRadius: _isHovered ? 12 : 8,
                         offset: const Offset(0, 4),
-                      )
+                      ),
                   ],
                 ),
                 child: Icon(
@@ -529,10 +593,14 @@ class _AllCategoryCircleState extends State<_AllCategoryCircle> {
               'All',
               style: TextStyle(
                 fontSize: 12,
-                fontWeight: widget.isSelected || _isHovered ? FontWeight.bold : FontWeight.w500,
+                fontWeight: widget.isSelected || _isHovered
+                    ? FontWeight.bold
+                    : FontWeight.w500,
                 color: widget.isSelected
                     ? AppColors.primary
-                    : (_isHovered ? AppColors.primaryLight : AppColors.textSecondary),
+                    : (_isHovered
+                          ? AppColors.primaryLight
+                          : AppColors.textSecondary),
               ),
             ),
           ],
