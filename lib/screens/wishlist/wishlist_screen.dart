@@ -24,7 +24,11 @@ class WishlistScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.favorite_border_rounded, size: 72, color: AppColors.accentGold),
+                    const Icon(
+                      Icons.favorite_border_rounded,
+                      size: 72,
+                      color: AppColors.accentGold,
+                    ),
                     const SizedBox(height: 16),
                     const Text(
                       'Your Wishlist is Empty',
@@ -38,7 +42,10 @@ class WishlistScreen extends ConsumerWidget {
                     const Text(
                       'Save your favorite luxury scents to view them anytime.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ],
                 ),
@@ -47,7 +54,7 @@ class WishlistScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(16),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.62,
+                  childAspectRatio: 0.54,
                   crossAxisSpacing: 14,
                   mainAxisSpacing: 14,
                 ),
