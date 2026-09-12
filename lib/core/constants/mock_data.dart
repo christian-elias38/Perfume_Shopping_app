@@ -110,7 +110,8 @@ class MockData {
       middleNotes: ['Cambodian Oud', 'Cedarwood', 'Patchouli'],
       baseNotes: ['Ambergris', 'Leather', 'Dark Chocolate'],
       imageUrls: [
-        'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1615397349754-cfa2066a298e?auto=format&fit=crop&w=800&q=80',
       ],
       stock: 20,
       rating: 5.0,
@@ -138,7 +139,7 @@ class MockData {
       middleNotes: ['Tahitian Vanilla', 'Bourbon Accord', 'Orchid'],
       baseNotes: ['Tonka Bean', 'White Amber', 'Cashmere Wood'],
       imageUrls: [
-        'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80',
       ],
       stock: 45,
       rating: 4.8,
@@ -166,7 +167,7 @@ class MockData {
       middleNotes: ['Sea Salt Accord', 'Neroli', 'Green Tea'],
       baseNotes: ['Driftwood', 'Light Cedar', 'Musk'],
       imageUrls: [
-        'https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80',
       ],
       stock: 50,
       rating: 4.7,
@@ -278,7 +279,7 @@ class MockData {
       middleNotes: ['Amberwood', 'Ambergris Accord'],
       baseNotes: ['Fir Resin', 'Atlas Cedar'],
       imageUrls: [
-        'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=800&q=80',
       ],
       stock: 22,
       rating: 4.9,
@@ -306,7 +307,7 @@ class MockData {
       middleNotes: ['Mimosa', 'French Rose', 'Carnation'],
       baseNotes: ['Mysore Sandalwood', 'Tonka Bean', 'Musk'],
       imageUrls: [
-        'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80',
       ],
       stock: 30,
       rating: 4.8,
@@ -390,7 +391,7 @@ class MockData {
       middleNotes: ['Roasted Hazelnut', 'Salted Caramel'],
       baseNotes: ['Madagascar Vanilla', 'Dark Musk'],
       imageUrls: [
-        'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80',
       ],
       stock: 60,
       rating: 4.9,
@@ -418,7 +419,7 @@ class MockData {
       middleNotes: ['Raspberry', 'Olibanum Resin'],
       baseNotes: ['Black Leather', 'Amberwood', 'Musk'],
       imageUrls: [
-        'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80',
       ],
       stock: 40,
       rating: 5.0,
