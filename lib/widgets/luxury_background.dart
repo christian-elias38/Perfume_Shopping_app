@@ -22,13 +22,13 @@ class _LuxuryBackgroundState extends State<LuxuryBackground>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final List<_Particle> _particles = List.generate(
-    18,
+    22,
     (index) => _Particle(
       x: math.Random().nextDouble(),
       y: math.Random().nextDouble(),
       size: math.Random().nextDouble() * 4 + 2,
       speed: math.Random().nextDouble() * 0.0008 + 0.0003,
-      opacity: math.Random().nextDouble() * 0.4 + 0.1,
+      opacity: math.Random().nextDouble() * 0.45 + 0.15,
     ),
   );
 
@@ -37,7 +37,7 @@ class _LuxuryBackgroundState extends State<LuxuryBackground>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 16),
+      duration: const Duration(seconds: 14),
     );
 
     if (widget.animateGlow) {
@@ -53,130 +53,122 @@ class _LuxuryBackgroundState extends State<LuxuryBackground>
 
   @override
   Widget build(BuildContext context) {
-    final bgColor1 = widget.isDarkMode ? const Color(0xFF140D0F) : AppColors.backgroundGradientStart;
-    final bgColor2 = widget.isDarkMode ? const Color(0xFF1E1317) : AppColors.background;
-    final bgColor3 = widget.isDarkMode ? const Color(0xFF0F0A0B) : AppColors.backgroundGradientEnd;
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final val = _controller.value;
+        final angle = val * math.pi * 2;
 
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [bgColor1, bgColor2, bgColor3],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Stack(
-        children: [
-          // Ambient Glow Orb 1: Champagne Gold (Top Right)
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              final val = _controller.value;
-              final offsetX = math.sin(val * math.pi * 2) * 35.0;
-              final offsetY = math.cos(val * math.pi * 2) * 30.0;
+        // Dynamic Animated Gradient Colors
+        final grad1 = Color.lerp(
+          widget.isDarkMode ? const Color(0xFF140D0F) : AppColors.backgroundGradientStart,
+          widget.isDarkMode ? const Color(0xFF1C0A10) : const Color(0xFFFDF7F0),
+          math.sin(angle) * 0.5 + 0.5,
+        )!;
 
-              return Positioned(
-                top: -80 + offsetY,
-                right: -90 + offsetX,
+        final grad2 = Color.lerp(
+          widget.isDarkMode ? const Color(0xFF1E1317) : AppColors.background,
+          widget.isDarkMode ? const Color(0xFF28151D) : const Color(0xFFF6ECE0),
+          math.cos(angle) * 0.5 + 0.5,
+        )!;
+
+        final grad3 = Color.lerp(
+          widget.isDarkMode ? const Color(0xFF0F0A0B) : AppColors.backgroundGradientEnd,
+          widget.isDarkMode ? const Color(0xFF180A0E) : const Color(0xFFEEE1D2),
+          math.sin(angle * 0.5) * 0.5 + 0.5,
+        )!;
+
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [grad1, grad2, grad3],
+              begin: Alignment(math.sin(angle * 0.5), -1.0),
+              end: Alignment(-math.sin(angle * 0.5), 1.0),
+            ),
+          ),
+          child: Stack(
+            children: [
+              // Ambient Glow Orb 1: Champagne Gold (Top Right)
+              Positioned(
+                top: -90 + math.cos(angle) * 35.0,
+                right: -100 + math.sin(angle) * 40.0,
                 child: Container(
-                  width: 320,
-                  height: 320,
+                  width: 340,
+                  height: 340,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.accentGold.withValues(alpha: 0.18),
-                        AppColors.accentGoldLight.withValues(alpha: 0.08),
+                        AppColors.accentGold.withOpacity(0.22),
+                        AppColors.accentGoldLight.withOpacity(0.09),
                         Colors.transparent,
                       ],
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
 
-          // Ambient Glow Orb 2: Deep Burgundy Rose (Bottom Left)
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              final val = _controller.value;
-              final offsetX = math.cos(val * math.pi * 2) * 30.0;
-              final offsetY = math.sin(val * math.pi * 2) * 35.0;
-
-              return Positioned(
-                bottom: -90 + offsetY,
-                left: -90 + offsetX,
+              // Ambient Glow Orb 2: Deep Burgundy Rose (Bottom Left)
+              Positioned(
+                bottom: -100 + math.sin(angle) * 35.0,
+                left: -100 + math.cos(angle) * 40.0,
                 child: Container(
-                  width: 360,
-                  height: 360,
+                  width: 380,
+                  height: 380,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.primaryLight.withValues(alpha: 0.12),
-                        AppColors.accentGold.withValues(alpha: 0.05),
+                        AppColors.primaryLight.withOpacity(0.16),
+                        AppColors.accentGold.withOpacity(0.07),
                         Colors.transparent,
                       ],
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
 
-          // Ambient Glow Orb 3: Soft Amber Center Pulse
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              final val = _controller.value;
-              final pulseScale = 1.0 + math.sin(val * math.pi) * 0.15;
-
-              return Positioned(
-                top: MediaQuery.of(context).size.height * 0.4,
-                left: MediaQuery.of(context).size.width * 0.2,
+              // Ambient Glow Orb 3: Soft Amber Center Pulse
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.35,
+                left: MediaQuery.of(context).size.width * 0.15,
                 child: Transform.scale(
-                  scale: pulseScale,
+                  scale: 1.0 + math.sin(val * math.pi) * 0.18,
                   child: Container(
-                    width: 260,
-                    height: 260,
+                    width: 280,
+                    height: 280,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
-                          AppColors.accentGold.withValues(alpha: 0.06),
+                          AppColors.accentGold.withOpacity(0.08),
+                          AppColors.primary.withOpacity(0.04),
                           Colors.transparent,
                         ],
                       ),
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
 
-          // Floating Scent Mist Particles
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              final size = MediaQuery.of(context).size;
-              return CustomPaint(
-                size: size,
+              // Floating Scent Mist Particles
+              CustomPaint(
+                size: MediaQuery.of(context).size,
                 painter: _MistParticlePainter(
                   particles: _particles,
-                  progress: _controller.value,
+                  progress: val,
                   isDark: widget.isDarkMode,
                 ),
-              );
-            },
-          ),
+              ),
 
-          // Main Screen Content
-          Positioned.fill(
-            child: widget.child,
+              // Main Content Overlay
+              Positioned.fill(
+                child: widget.child,
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -220,7 +212,7 @@ class _MistParticlePainter extends CustomPainter {
       final posY = curY * size.height;
 
       paint.color = (isDark ? AppColors.accentGold : AppColors.accentGold)
-          .withValues(alpha: p.opacity * (0.6 + 0.4 * math.sin(progress * math.pi * 2 + p.x * 5)));
+          .withOpacity(p.opacity * (0.6 + 0.4 * math.sin(progress * math.pi * 2 + p.x * 5)));
 
       canvas.drawCircle(Offset(posX, posY), p.size, paint);
     }
